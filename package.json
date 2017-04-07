@@ -1,0 +1,17 @@
+{
+  "name": "renren",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axer": "0.0.5",
+    "cheerio": "^0.22.0",
+    "commander": "^2.9.0",
+    "readline-sync": "^1.4.7"
+  }
+}
