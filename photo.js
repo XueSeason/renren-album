@@ -21,12 +21,15 @@ async function getPhoto(album) {
     // 创建相册目录
     const albumPath = path.resolve(config.storageDir, `${album.ownerId}`, album.albumName)
     await file.mkdir(albumPath)
+
+    const originalPhotoUrl = photo.url.replace('large', 'original')
+    const photoSavePath = path.resolve(albumPath, `${photo.photoId}.jpg`)
     // 下载照片
     try {
-      await request.download(photo.url, path.resolve(albumPath, `${photo.photoId}.jpg`))
+      await request.download(originalPhotoUrl, photoSavePath)
     } catch (error) {
       console.log('下载出现错误，将再次尝试一次下载')
-      await request.download(photo.url, path.resolve(albumPath, `${photo.photoId}.jpg`))
+      await request.download(originalPhotoUrl, photoSavePath)
     } 
   }
 }
