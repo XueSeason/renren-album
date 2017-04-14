@@ -22,7 +22,12 @@ async function getPhoto(album) {
     const albumPath = path.resolve(config.storageDir, `${album.ownerId}`, album.albumName)
     await file.mkdir(albumPath)
     // 下载照片
-    await request.download(photo.url, path.resolve(albumPath, `${photo.photoId}.jpg`))
+    try {
+      await request.download(photo.url, path.resolve(albumPath, `${photo.photoId}.jpg`))
+    } catch (error) {
+      console.log('下载出现错误，将再次尝试一次下载')
+      await request.download(photo.url, path.resolve(albumPath, `${photo.photoId}.jpg`))
+    } 
   }
 }
 
@@ -41,7 +46,11 @@ async function getAlbum(ownerId) {
   for(let i = 0; i < albumlistInfo.albumList.albumList.length; i++) {
     const album = albumlistInfo.albumList.albumList[i]
     // 获取相册内到照片
-    await getPhoto(album)
+    try {
+      await getPhoto(album) 
+    } catch (error) {
+      console.log('获取照片失败', error)
+    }
   }
 }
 
