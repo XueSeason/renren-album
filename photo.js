@@ -22,14 +22,26 @@ async function getPhoto(album) {
     const albumPath = path.resolve(config.storageDir, `${album.ownerId}`, album.albumName)
     await file.mkdir(albumPath)
 
-    const originalPhotoUrl = photo.url.replace('large', 'original')
+    const hdPhotoUrl = photo.url
+    const originalPhotoUrl = hdPhotoUrl.replace('large', 'original')
+
     const photoSavePath = path.resolve(albumPath, `${photo.photoId}.jpg`)
     // 下载照片
     try {
       await request.download(originalPhotoUrl, photoSavePath)
+      const checkContent = await file.cat(photoSavePath)
+      if (checkContent.indexOf('DOCTYPE') > 0) {
+        console.log('不存在原图，开始下载高清图')
+        await request.download(hdPhotoUrl, photoSavePath)
+      }
     } catch (error) {
       console.log('下载出现错误，将再次尝试一次下载')
       await request.download(originalPhotoUrl, photoSavePath)
+      const checkContent = await file.cat(photoSavePath)
+      if (checkContent.indexOf('DOCTYPE') > 0) {
+        console.log('不存在原图，开始下载高清图')
+        await request.download(hdPhotoUrl, photoSavePath)
+      }
     } 
   }
 }

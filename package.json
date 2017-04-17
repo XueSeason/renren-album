@@ -12,6 +12,7 @@
     "axer": "0.0.5",
     "cheerio": "^0.22.0",
     "commander": "^2.9.0",
+    "node-rsa": "^0.4.2",
     "readline-sync": "^1.4.7"
   }
 }

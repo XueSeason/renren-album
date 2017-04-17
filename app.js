@@ -36,3 +36,7 @@ async function run() {
 }
 
 run()
+
+process.on('unhandledRejection', err => {
+  console.log('unhandledRejection', err)
+})

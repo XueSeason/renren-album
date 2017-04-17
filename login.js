@@ -4,6 +4,7 @@ const file = require('axer').file
 const readlineSync = require('readline-sync')
 const exec = require('child_process').exec
 const r = require('./encrypt')
+const NodeRSA = require('node-rsa')
 const config = require('./config')
 
 async function login(account, password) {
@@ -40,10 +41,20 @@ async function login(account, password) {
   // 登录
   const loginUrl = `http://www.renren.com/ajaxLogin/login?1=1&uniqueTimestamp=${(new Date).getTime}`
   r.getKeys(keyInfo.e, keyInfo.n, keyInfo.maxdigits)
+
+  // const key = new NodeRSA(null, {
+  //   encryptionScheme: 'pkcs1',
+  // })
+  // key.importKey({
+  //   n: new Buffer(keyInfo.n, 'hex'),
+  //   e: parseInt(keyInfo.e, 16),
+  // }, 'components-public')
+
   const loginResponse = await request.post(loginUrl, {
     email: account,
     icode, // 验证码
     password: r.encrypt(password),
+    // password: key.encrypt(password, 'hex'),
     rkey: keyInfo.rkey,
     f: '',
     origURL: 'http://www.renren.com/home',
