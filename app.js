@@ -7,6 +7,7 @@ const program = require('commander')
 
 const login = require('./login')
 const photo = require('./photo')
+const keyword = require('./keyword')
 
 program
   .version(package.version)
@@ -14,6 +15,8 @@ program
   .option('-d, --download', 'download album')
   .option('-u, --username [string]', 'append username')
   .option('-p, --password [string]', 'append password')
+  .option('-k, --keyword [string]', 'append keyword')
+  .option('-n, --number [number]', 'the number of keyword images you want to download, default 10')
   .option('-i, --userid [string]', 'specify download someone\'s album by user id')
   .parse(process.argv)
 
@@ -32,6 +35,8 @@ async function run() {
     } else {
       await photo.getAlbum(program.userid)
     }
+  } else if (program.keyword) {
+    await keyword.getPhoto(program.keyword, program.number || 10)
   }
 }
 

@@ -17,6 +17,9 @@
 
 # 下载指定用户 id 相册
 ./app.js -d -i 4413**450
+
+# 下载指定关键词相片，并指定数量
+./app.js -k 葫芦娃 -n 40
 ```
 
 相关内容保存在项目目录下的 locals 文件夹内。
@@ -37,6 +40,8 @@
     -d, --download           download album
     -u, --username [string]  append username
     -p, --password [string]  append password
+    -k, --keyword [string]   append keyword
+    -n, --number [number]    the number of keyword images you want to download, default 10
     -i, --userid [string]    specify download someone's album by user id
 ```
 
